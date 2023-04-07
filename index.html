@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzalandia</title>
+    <link rel="icon" type="image/ico" href="img/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <script src="./js/script.js"></script>
+
+</head>
+
+<body onload="init()">
+
+    <header>
+        <div class="logo-container">
+            <img class="logo-pic" src="img/pizza.png">
+            <div class="logo-text"><b>Pizzalandia</b></div>
+        </div> 
+        <div class="header-title"><b>Speisekarte</b></div>
+        <nav>
+            <img class="icon" src="img/germany-flag.png">
+            <img class="icon" src="img/icons/bars-solid.svg">
+        </nav>
+    </header>
+
+    <div class="content-container">
+        <main class="restaurant-container">
+            <img class="restaurant-pic" src="img/pizza-1280.jpg">
+            <h1>Pizzeria Toskana</h1>
+        <!-- Rendering left side (Menu Card)-->
+            <div class="render-content" id="content"></div>
+            <button title="Zum Warenkorb" onclick="showBasket()" class="mobile-button">
+                <b>Warenkorb öffnen</b>
+                <b id="mobileSum"></b>
+            </button>
+        </main>
+        <sidebar id="overlay-basket" class="basket-container">
+            <div class="basket-title"><b>Warenkorb</b></div>
+        <!-- Rendering right side (Shopping Cart) -->
+            <div class="render-basket" id="basket"></div>
+            <div class="basket-sum" id="sum"></div>
+            <div id="payment" class="pay-message display-none">
+                <div id="successfull"></div>
+            </div>
+        </sidebar>
+    </div>
+
+    <footer>
+        <div>© 2022 Pizzalandia</div>
+        <div>AGB</div>
+        <div>Datenschutzerklärung</div>
+        <div>Impressum</div>
+    </footer>
+
+</body>
+
+</html>

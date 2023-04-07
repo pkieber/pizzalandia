@@ -1,0 +1,44 @@
+[
+    {
+        "number": "p01",
+        "pizzas": "Pizza 'Margherita'",
+        "ingredients": "mit Tomaten, Mozzarella",
+        "prices": 8.00
+    }, 
+    {
+        "number": "p02",
+        "pizzas": "Pizza 'Salami'",
+        "ingredients": "mit Tomaten, Mozzarella und Salami",
+        "prices": 8.50
+    }, 
+    {
+        "number": "p03",
+        "pizzas": "Pizza 'Prosciutto'",
+        "ingredients": "mit Tomaten, Mozzarella und Schinken",
+        "prices": 8.50
+    }, 
+    {
+        "number": "p04",
+        "pizzas": "Pizza 'Piccante'",
+        "ingredients": "mit Tomaten, Mozzarella, Salami und Jalapenos",
+        "prices": 9.50
+    }, 
+    {
+        "number": "p05",
+        "pizzas": "Pizza 'Vegane'",
+        "ingredients": "mit veganen Zutaten",
+        "prices": 8.50
+    }, 
+    {
+        "number": "p06",
+        "pizzas": "Pizza 'Dela Casa'",
+        "ingredients": "mit Tomaten, Mozzarella, Schinken, Artischocken und Paprika",
+        "prices": 10.00
+    }, 
+    {
+        "number": "p07",
+        "pizzas": "Pizza 'Patrick'",
+        "ingredients": "mit Tomaten, Mozarella, Oliven, Shrimps",
+        "prices": 10.50
+    }
+]
