@@ -13,13 +13,20 @@ let basketAmount = [];
 
 
 /**
+ * Sets fixed delivery costs and a limit for free delivery.
+ */
+let fixDeliveryCosts = 4; 
+let freeDeliveryLimit = 20;
+
+
+/**
  * Fetching data from JSON-File (pizzaMenus)
  */
 async function init() {
     let response = await fetch('./js/pizzaMenu.json');
     pizzaMenus = await response.json();
     renderContent();
-    renderEmptyBasketHTML();
+    renderEmptyBasketAlert();
 }
 
 
@@ -30,26 +37,12 @@ async function init() {
 function renderContent() {
     let content = document.getElementById('content');
     for (let i = 0; i < pizzaMenus.length; i++) {
-        const pizza = pizzaMenus[i].pizzas;
-        const ingredient = pizzaMenus[i].ingredients;
-        const price = pizzaMenus[i].prices;
+        const pizza = pizzaMenus[i].pizza;
+        const ingredient = pizzaMenus[i].ingredient;
+        const price = pizzaMenus[i].price;
         const formatPrice = formatNumber(price);
         content.innerHTML += renderContentHTML (pizza, ingredient, formatPrice, i);
     }
-}
-
-
-function renderContentHTML(pizza, ingredient, formatPrice, i) { 
-    return `
-        <div title="Pizza zum Warenkorb" class="pizzas" onclick="addToBasket(${i})">
-            <div>
-                <h3>${pizza}</h3>
-                <div><i>${ingredient}</i></div>
-                <div>${formatPrice} €</div>
-            </div>
-            <img src="img/icons/plus@2x.png" class="icon">
-        </div>
-        `;
 }
 
 
@@ -57,16 +50,9 @@ function renderContentHTML(pizza, ingredient, formatPrice, i) {
 * RIGHT CONTAINER ('BASKET'):
 * Rendering a friendly reminder (when basket is empty).
 */
-function renderEmptyBasketHTML() {
+function renderEmptyBasketAlert() {
     let basket = document.getElementById('basket');
-    basket.innerHTML += `
-        <div>
-            <img src="img/icons/bag@2x.png" class="icon">
-            <div><h4>Fülle deinen Warenkorb</h4></div>
-            <p>Füge einige leckere Pizzas aus der Speisekarte hinzu und bestelle dein Essen.</p>
-        </div>
-        <img title="Warenkorb schliessen" src="img/icons/xmark@2x.png" onclick="closeBasket()" class="close-icon">
-        `;
+    basket.innerHTML += emptyBasketAlertHTML();
 }
 
 
@@ -98,27 +84,13 @@ function formatNumber(number) {
 }
 
 
-function renderBasketHTML(addPizza, addAmount, formatSubTotal, i) {
-    return `
-        <div>
-            <p>${addAmount} x ${addPizza}: ${formatSubTotal} €</p>
-            <div class="icons-container">
-                <div title="Menge reduzieren" onclick="substractPizza(${i})"><img src="img/icons/cart.badge.minus@2x.png" class="icon"></div>
-                <div title="Menge erhöhen" onclick="addPizza(${i})"><img src="img/icons/cart.badge.plus@2x.png" class="icon"></div>
-                <div title="Auswahl löschen" onclick="deleteOrder(${i})"><img src="img/icons/trash@2x.png" class="icon"></div>
-            </div>
-        </div>
-    `;
-}
-
-
 /**
  * Selected pizza is moved to the shopping basket.
  * @param {*} i 
  */
 function addToBasket(i) { 
-    let addedPizza = pizzaMenus[i].pizzas; // Link Content-Array 'pizzas' (see 'render-content') to new variable.
-    let addedPrice = pizzaMenus[i].prices;
+    let addedPizza = pizzaMenus[i].pizza; // Link Content-Array 'pizzas' (see 'render-content') to new variable.
+    let addedPrice = pizzaMenus[i].price;
     let index = basketPizza.indexOf(addedPizza); // IndexOf to find out if there's already pizza in the basket.
     if (index == -1) { // If no element added so far,...
         basketPizza.push(addedPizza)// ...element is moved to array 'basket_pizza'.
@@ -181,7 +153,7 @@ function deleteOrder(i) {
  */
 function checkIfEmptyBasket(basketAmount){
     if (basketAmount==0) {
-        renderEmptyBasketHTML();
+        renderEmptyBasketAlert();
         let mobileSum = document.getElementById('mobileSum');
         mobileSum.innerHTML = '';
     }
@@ -205,28 +177,21 @@ function totalPayment() {
 /**
  * Lists the total sum to pay (including delivery costs).
  * formatNumber() sets numbers into the correct format (e.g. 10.00).
+ * deliveryCost is set to 0, if order exceeds freeDeliveryLimit.
  * @param {*} total 
  * @returns 
  */
 function showTotalPrice(total) {
     const formatTotal = formatNumber(total);
-    const deliveryCost = 2; // Set fixed delivery costs. 
+    let deliveryCost = fixDeliveryCosts;
+    if (total > freeDeliveryLimit) {
+        deliveryCost = 0;
+    }
     const formatDeliveryCost = formatNumber(deliveryCost);
     const totalAndDelivery = total + deliveryCost;
     formatTotalAndDelivery = formatNumber(totalAndDelivery);
     mobilePaymentAlert(formatTotalAndDelivery);
     return generateTotalPriceHTML(formatTotal, formatDeliveryCost, formatTotalAndDelivery);
-}
-
-
-function generateTotalPriceHTML(formatTotal, formatDeliveryCost, formatTotalAndDelivery) {
-    return `
-    <div class="pay-box"><div>Zwischensumme:</div><div>${formatTotal} €</div></div>
-    <div class="pay-box"><div>Lieferkosten:</div><div>${formatDeliveryCost} €</div></div>
-    <div class="pay-box"><div><b>Gesamtsumme:</b></div><div><b>${formatTotalAndDelivery} €</b></div></div>
-    <button title="Weiter zum Bezahlen" onclick="showPaymentMessage()"><b>Bezahlen (${formatTotalAndDelivery} €)</b></button>
-    <img title="Warenkorb schliessen" src="img/icons/xmark@2x.png" onclick="closeBasket()" class="close-icon">
-    `;
 }
 
 
@@ -268,4 +233,59 @@ function showBasket() {
 function closeBasket(){
     const overlayBasket = document.getElementById('overlay-basket');
     overlayBasket.classList.replace('basket-container-mobile', 'basket-container');
+}
+
+
+/**
+ * HTML Templates
+ */
+function emptyBasketAlertHTML(){
+    return `
+    <div>
+        <img src="img/icons/bag@2x.png" class="icon">
+        <div><h4>Ihr Warenkorb ist leider noch leer.</h4></div>
+        <p>Fügen Sie leckere Pizzas hinzu.</p>
+        <p>Wir liefern gratis ab ${freeDeliveryLimit}€ Bestellwert!</p>
+    </div>
+    <img title="Warenkorb schliessen" src="img/icons/xmark@2x.png" onclick="closeBasket()" class="close-icon">
+    `;
+}
+
+
+function renderContentHTML(pizza, ingredient, formatPrice, i) { 
+    return `
+        <div title="Pizza zum Warenkorb" class="pizzas" onclick="addToBasket(${i})">
+            <div>
+                <h3>${pizza}</h3>
+                <div><i>${ingredient}</i></div>
+                <div>${formatPrice} €</div>
+            </div>
+            <img src="img/icons/plus@2x.png" class="icon">
+        </div>
+        `;
+}
+
+
+function renderBasketHTML(addPizza, addAmount, formatSubTotal, i) {
+    return `
+        <div>
+            <p>${addAmount} x ${addPizza}: ${formatSubTotal} €</p>
+            <div class="icons-container">
+                <div title="Menge reduzieren" onclick="substractPizza(${i})"><img src="img/icons/cart.badge.minus@2x.png" class="icon"></div>
+                <div title="Menge erhöhen" onclick="addPizza(${i})"><img src="img/icons/cart.badge.plus@2x.png" class="icon"></div>
+                <div title="Auswahl löschen" onclick="deleteOrder(${i})"><img src="img/icons/trash@2x.png" class="icon"></div>
+            </div>
+        </div>
+    `;
+}
+
+
+function generateTotalPriceHTML(formatTotal, formatDeliveryCost, formatTotalAndDelivery) {
+    return `
+    <div class="pay-box"><div>Zwischensumme:</div><div>${formatTotal} €</div></div>
+    <div class="pay-box"><div>Lieferkosten:</div><div>${formatDeliveryCost} €</div></div>
+    <div class="pay-box"><div><b>Gesamtsumme:</b></div><div><b>${formatTotalAndDelivery} €</b></div></div>
+    <button title="Weiter zum Bezahlen" onclick="showPaymentMessage()"><b>Bezahlen (${formatTotalAndDelivery} €)</b></button>
+    <img title="Warenkorb schliessen" src="img/icons/xmark@2x.png" onclick="closeBasket()" class="close-icon">
+    `;
 }

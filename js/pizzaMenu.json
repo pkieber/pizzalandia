@@ -1,44 +1,44 @@
 [
     {
         "number": "p01",
-        "pizzas": "Pizza 'Margherita'",
-        "ingredients": "mit Tomaten, Mozzarella",
-        "prices": 8.00
+        "pizza": "Pizza 'Margherita'",
+        "ingredient": "mit Tomaten, Mozzarella",
+        "price": 8.00
     }, 
     {
         "number": "p02",
-        "pizzas": "Pizza 'Salami'",
-        "ingredients": "mit Tomaten, Mozzarella und Salami",
-        "prices": 8.50
+        "pizza": "Pizza 'Salami'",
+        "ingredient": "mit Tomaten, Mozzarella und Salami",
+        "price": 8.50
     }, 
     {
         "number": "p03",
-        "pizzas": "Pizza 'Prosciutto'",
-        "ingredients": "mit Tomaten, Mozzarella und Schinken",
-        "prices": 8.50
+        "pizza": "Pizza 'Prosciutto'",
+        "ingredient": "mit Tomaten, Mozzarella und Schinken",
+        "price": 8.50
     }, 
     {
         "number": "p04",
-        "pizzas": "Pizza 'Piccante'",
-        "ingredients": "mit Tomaten, Mozzarella, Salami und Jalapenos",
-        "prices": 9.50
+        "pizza": "Pizza 'Piccante'",
+        "ingredient": "mit Tomaten, Mozzarella, Salami und Jalapenos",
+        "price": 9.50
     }, 
     {
         "number": "p05",
-        "pizzas": "Pizza 'Vegane'",
-        "ingredients": "mit veganen Zutaten",
-        "prices": 8.50
+        "pizza": "Pizza 'Vegane'",
+        "ingredient": "mit veganen Zutaten",
+        "price": 8.50
     }, 
     {
         "number": "p06",
-        "pizzas": "Pizza 'Dela Casa'",
-        "ingredients": "mit Tomaten, Mozzarella, Schinken, Artischocken und Paprika",
-        "prices": 10.00
+        "pizza": "Pizza 'Dela Casa'",
+        "ingredient": "mit Tomaten, Mozzarella, Schinken, Artischocken und Paprika",
+        "price": 10.00
     }, 
     {
         "number": "p07",
-        "pizzas": "Pizza 'Patrick'",
-        "ingredients": "mit Tomaten, Mozarella, Oliven, Shrimps",
-        "prices": 10.50
+        "pizza": "Pizza 'Patrick'",
+        "ingredient": "mit Tomaten, Mozarella, Oliven, Shrimps",
+        "price": 10.50
     }
 ]
